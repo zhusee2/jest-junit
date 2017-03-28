@@ -61,11 +61,14 @@ module.exports = (report) => {
       return;
     }
 
+    const suitePath = suite.testFilePath.match(/src.+js$/)[0];
+
     // Add <testsuite /> properties
     let testSuite = {
       'testsuite': [{
         _attr: {
-          name: suite.testResults[0].ancestorTitles[0],
+          name: suitePath,
+          package: suitePath,
           tests: suite.numFailingTests + suite.numPassingTests + suite.numPendingTests,
           errors: 0,  // not supported
           failures: suite.numFailingTests,
@@ -76,9 +79,11 @@ module.exports = (report) => {
       }]
     };
 
+    const defaultClassName = suite.testFilePath.match(/\/(\w+)\.test\.js$/)[1];
+
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
-      const classname = tc.ancestorTitles.join(' ');
+      const classname = tc.ancestorTitles.join(' ') || defaultClassName;
       const title = tc.title;
 
       let testCase = {
