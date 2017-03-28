@@ -22,8 +22,8 @@ try {
 const SUITE_NAME = process.env.JEST_SUITE_NAME || cfg.suiteName || 'jest tests';
 const OUTPUT_PATH = process.env.JEST_JUNIT_OUTPUT || cfg.output ||
                     path.join(process.cwd(), './junit.xml');
-const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || cfg.classNameTemplate || '{classname} {title}';
-const TITLE_TEMPLATE = process.env.JEST_JUNIT_TITLE || cfg.titleTemplate || '{classname} {title}';
+const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || cfg.classNameTemplate || CLASSNAME_VAR;
+const TITLE_TEMPLATE = process.env.JEST_JUNIT_TITLE || cfg.titleTemplate || TITLE_VAR;
 
 const replaceVars = function (str, classname, title) {
   return str
