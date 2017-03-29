@@ -89,7 +89,7 @@ module.exports = (report) => {
       let testCase = {
         'testcase': [{
           _attr: {
-            classname: replaceVars(CLASSNAME_TEMPLATE, classname, title),
+            classname: `${suitePath}.${classname}`,
             name: replaceVars(TITLE_TEMPLATE, classname, title),
             time: tc.duration / 1000
           }
