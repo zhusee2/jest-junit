@@ -30,9 +30,9 @@ jest-junit offers four configurations based on environment variables.
 
 ```JEST_JUNIT_OUTPUT```: Default "./junit.xml"
 
-```JEST_JUNIT_CLASSNAME```: Default "{classname}-{title}"
+```JEST_JUNIT_CLASSNAME```: Default "{filepath}.{classname}"
 
-```JEST_JUNIT_TITLE```: Default "{classname}-{title}"
+```JEST_JUNIT_TITLE```: Default "{title}"
 
 Example:
 
@@ -48,8 +48,8 @@ You can also define a 'jest-junit' key in your package.json.
     "jest-junit": {
         "suiteName": "jest tests",
         "output": "./junit.xml",
-        "classNameTemplate": "{classname}-{title}",
-        "titleTemplate": "{classname}-{title}"
+        "classNameTemplate": "{filepath}.{classname}",
+        "titleTemplate": "{title}"
     }
 }
 ```
@@ -57,8 +57,8 @@ You can also define a 'jest-junit' key in your package.json.
 Example output:
 ```xml
 <testsuites name="Jest JUnit Unit Tests">
-  <testsuite name="My first suite" tests="1" errors="0" failures="0" skipped="0" timestamp="2016-11-19T01:37:20" time="0.105">
-    <testcase classname="My test case" name="My test case" time="6">
+  <testsuite name="src/__tests__/Foo.test.js" tests="1" errors="0" failures="0" skipped="0" timestamp="2016-11-19T01:37:20" time="0.105">
+    <testcase classname="src/__tests__/Foo.test.js.Foo" name="My test case" time="6">
     </testcase>
   </testsuite>
 </testsuites>

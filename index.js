@@ -8,6 +8,7 @@ const path = require('path');
 // Look for these when replacing template vars
 const CLASSNAME_VAR = '{classname}';
 const TITLE_VAR = '{title}';
+const FILEPATH_VAR = '{filepath}';
 
 const cfg = {};
 try {
@@ -22,13 +23,14 @@ try {
 const SUITE_NAME = process.env.JEST_SUITE_NAME || cfg.suiteName || 'jest tests';
 const OUTPUT_PATH = process.env.JEST_JUNIT_OUTPUT || cfg.output ||
                     path.join(process.cwd(), './junit.xml');
-const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || cfg.classNameTemplate || CLASSNAME_VAR;
+const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || cfg.classNameTemplate || `${FILEPATH_VAR}.${CLASSNAME_VAR}`;
 const TITLE_TEMPLATE = process.env.JEST_JUNIT_TITLE || cfg.titleTemplate || TITLE_VAR;
 
-const replaceVars = function (str, classname, title) {
+const replaceVars = function (str, classname, title, filepath) {
   return str
     .replace(CLASSNAME_VAR, classname)
-    .replace(TITLE_VAR, title);
+    .replace(TITLE_VAR, title)
+    .replace(FILEPATH_VAR, filepath);
 };
 
 /*
@@ -89,8 +91,8 @@ module.exports = (report) => {
       let testCase = {
         'testcase': [{
           _attr: {
-            classname: `${suitePath}.${classname}`,
-            name: replaceVars(TITLE_TEMPLATE, classname, title),
+            classname: replaceVars(CLASSNAME_TEMPLATE, classname, title, suitePath),
+            name: replaceVars(TITLE_TEMPLATE, classname, title, suitePath),
             time: tc.duration / 1000
           }
         }]
